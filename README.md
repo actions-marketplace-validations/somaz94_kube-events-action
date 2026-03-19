@@ -2,6 +2,9 @@
 
 [![CI](https://github.com/somaz94/kube-events-action/actions/workflows/ci.yml/badge.svg)](https://github.com/somaz94/kube-events-action/actions/workflows/ci.yml)
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
+[![Latest Tag](https://img.shields.io/github/v/tag/somaz94/kube-events-action)](https://github.com/somaz94/kube-events-action/tags)
+[![Top Language](https://img.shields.io/github/languages/top/somaz94/kube-events-action)](https://github.com/somaz94/kube-events-action)
+[![GitHub Marketplace](https://img.shields.io/badge/Marketplace-Kube%20Events%20Action-blue?logo=github)](https://github.com/marketplace/actions/kube-events-action)
 
 A GitHub Action that checks Kubernetes cluster events using [kube-events](https://github.com/somaz94/kube-events), and optionally posts the report as a PR comment.
 
