@@ -31,6 +31,10 @@ inputs:
     description: 'Show events newer than relative duration (e.g., 5m, 1h, 24h)'
     required: false
     default: '10m'
+  group-by:
+    description: 'Group events by: resource, namespace, kind, reason'
+    required: false
+    default: 'resource'
   output:
     description: 'Output format: color, plain, json, markdown, table'
     required: false
@@ -90,6 +94,7 @@ runs:
         INPUT_TYPE: ${{ inputs.type }}
         INPUT_REASON: ${{ inputs.reason }}
         INPUT_SINCE: ${{ inputs.since }}
+        INPUT_GROUP_BY: ${{ inputs.group-by }}
         INPUT_OUTPUT: ${{ inputs.output }}
         INPUT_SUMMARY_ONLY: ${{ inputs.summary-only }}
         INPUT_ALL_NAMESPACES: ${{ inputs.all-namespaces }}

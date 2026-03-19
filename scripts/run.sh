@@ -33,6 +33,10 @@ if [[ -n "${INPUT_SINCE}" ]]; then
   CMD+=(--since "${INPUT_SINCE}")
 fi
 
+if [[ -n "${INPUT_GROUP_BY:-}" ]] && [[ "${INPUT_GROUP_BY}" != "resource" ]]; then
+  CMD+=(-g "${INPUT_GROUP_BY}")
+fi
+
 if [[ -n "${INPUT_OUTPUT}" ]]; then
   CMD+=(-o "${INPUT_OUTPUT}")
 fi
