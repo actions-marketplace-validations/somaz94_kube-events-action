@@ -57,7 +57,11 @@ if [[ ! -f "${TMPDIR}/kube-events" ]]; then
 fi
 
 chmod +x "${TMPDIR}/kube-events"
-sudo mv "${TMPDIR}/kube-events" /usr/local/bin/kube-events
+if [[ -w /usr/local/bin ]]; then
+  mv "${TMPDIR}/kube-events" /usr/local/bin/kube-events
+else
+  sudo mv "${TMPDIR}/kube-events" /usr/local/bin/kube-events
+fi
 
 echo "Installed: $(kube-events version)"
 echo "::endgroup::"

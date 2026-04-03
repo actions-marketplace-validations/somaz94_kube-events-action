@@ -14,7 +14,11 @@ if [[ -n "${INPUT_NAMESPACE}" ]]; then
 fi
 
 if [[ -n "${INPUT_KIND}" ]]; then
-  CMD+=(-k "${INPUT_KIND}")
+  IFS=',' read -ra KIND_LIST <<< "${INPUT_KIND}"
+  for kind in "${KIND_LIST[@]}"; do
+    trimmed=$(echo "${kind}" | xargs)
+    CMD+=(-k "${trimmed}")
+  done
 fi
 
 if [[ -n "${INPUT_NAME:-}" ]]; then
@@ -22,11 +26,19 @@ if [[ -n "${INPUT_NAME:-}" ]]; then
 fi
 
 if [[ -n "${INPUT_TYPE:-}" ]]; then
-  CMD+=(-t "${INPUT_TYPE}")
+  IFS=',' read -ra TYPE_LIST <<< "${INPUT_TYPE}"
+  for type in "${TYPE_LIST[@]}"; do
+    trimmed=$(echo "${type}" | xargs)
+    CMD+=(-t "${trimmed}")
+  done
 fi
 
 if [[ -n "${INPUT_REASON:-}" ]]; then
-  CMD+=(-r "${INPUT_REASON}")
+  IFS=',' read -ra REASON_LIST <<< "${INPUT_REASON}"
+  for reason in "${REASON_LIST[@]}"; do
+    trimmed=$(echo "${reason}" | xargs)
+    CMD+=(-r "${trimmed}")
+  done
 fi
 
 if [[ -n "${INPUT_SINCE}" ]]; then
@@ -65,10 +77,10 @@ echo "::endgroup::"
 # Try JSON parsing first, fall back to regex
 WARNING_COUNT=0
 if [[ "${INPUT_OUTPUT}" == "json" ]]; then
-  WARNING_COUNT=$(echo "${RESULT}" | grep -oE '"warningCount":\s*[0-9]+' | head -1 | grep -oE '[0-9]+' || echo "0")
+  WARNING_COUNT=$(echo "${RESULT}" | grep -oE '"warningCount"[[:space:]]*:[[:space:]]*[0-9]+' | head -1 | grep -oE '[0-9]+' || echo "0")
 else
   # Parse from summary line: "Warning: N" or "(Warning: N,"
-  WARNING_COUNT=$(echo "${RESULT}" | grep -oE 'Warning: [0-9]+' | head -1 | grep -oE '[0-9]+' || echo "0")
+  WARNING_COUNT=$(echo "${RESULT}" | grep -oE 'Warning:[[:space:]]*[0-9]+' | head -1 | grep -oE '[0-9]+' || echo "0")
 fi
 
 if [[ -z "${WARNING_COUNT}" ]]; then
